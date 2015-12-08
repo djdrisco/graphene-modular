@@ -1,0 +1,24 @@
+{
+  "name": "graphene-modular",
+  "version": "1.0.0",
+  "authors": [
+    "Consumer Financial Protection Bureau"
+  ],
+  "description": "Realtime Graphing Toolkit Library using D3 and Backbone.js",
+  "main": "graphene.js",
+  "moduleType": [],
+  "keywords": [
+    "d3",
+    "backbone.js",
+    "svg"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/djdrisco/graphene-modular",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
