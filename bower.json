@@ -5,7 +5,9 @@
     "Consumer Financial Protection Bureau"
   ],
   "description": "Realtime Graphing Toolkit Library using D3 and Backbone.js",
-  "main": "graphene.js",
+  "exportsOverride": {
+    "js": "*.js"
+  },
   "moduleType": [],
   "keywords": [
     "d3",
