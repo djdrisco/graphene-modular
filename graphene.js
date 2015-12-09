@@ -111,6 +111,7 @@ define(['jquery', 'underscore', 'backbone','d3gauge','layoutmanager'], function(
       this.refresh = bind(this.refresh, this);
       this.stop = bind(this.stop, this);
       this.start = bind(this.start, this);
+      this.enableJsonP = bind(this.enableJsonP, this);
       return GraphiteModel.__super__.constructor.apply(this, arguments);
     }
 
@@ -121,6 +122,8 @@ define(['jquery', 'underscore', 'backbone','d3gauge','layoutmanager'], function(
       ymax: 0,
       refresh_interval: 10000
     };
+
+    GraphiteModel.prototype.enableJsonP = true;
 
     GraphiteModel.prototype.debug = function() {
       return console.log("" + (this.get('refresh_interval')));
@@ -139,20 +142,38 @@ define(['jquery', 'underscore', 'backbone','d3gauge','layoutmanager'], function(
     GraphiteModel.prototype.refresh = function() {
       var options, url;
       url = this.get('source');
-      if (-1 === url.indexOf('&jsonp=?')) {
-        url = url + '&jsonp=?';
+
+      if(this.enableJsonP===true) {
+        if (-1 === url.indexOf('&jsonp=?')) {
+          url = url + '&jsonp=?';
+        }
       }
-      options = {
-        url: url,
-        dataType: 'json',
-        jsonp: 'jsonp',
-        success: (function(_this) {
-          return function(js) {
-            console.log("got data.");
-            return _this.process_data(js);
-          };
-        })(this)
-      };
+
+      if(this.enableJsonP===true) {
+        options = {
+          url: url,
+          dataType: 'json',
+          jsonp: 'jsonp',
+          success: (function (_this) {
+            return function (js) {
+              console.log("got data.");
+              return _this.process_data(js);
+            };
+          })(this)
+        };
+      }
+      else{
+        options = {
+          url: url,
+          dataType: 'json',
+          success: (function (_this) {
+            return function (js) {
+              console.log("got data.");
+              return _this.process_data(js);
+            };
+          })(this)
+        };
+      }
       return $.ajax(options);
     };
 
